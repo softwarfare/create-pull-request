@@ -1,6 +1,6 @@
 import * as core from '@actions/core'
-import {GitCommandManager, Commit} from './git-command-manager'
-import {v4 as uuidv4} from 'uuid'
+import { v4 as uuidv4 } from 'uuid'
+import { Commit, GitCommandManager } from './git-command-manager'
 import * as utils from './utils'
 
 const CHERRYPICK_EMPTY =
@@ -173,6 +173,7 @@ export async function createOrUpdateBranch(
   branch: string,
   branchRemoteName: string,
   signoff: boolean,
+  signCommits: boolean,
   addPaths: string[]
 ): Promise<CreateOrUpdateBranchResult> {
   // Get the working base.
@@ -204,6 +205,9 @@ export async function createOrUpdateBranch(
     const popts = ['-m', commitMessage]
     if (signoff) {
       popts.push('--signoff')
+    }
+    if (signCommits) {
+      popts.push('--gpg-sign')
     }
     const commitResult = await git.commit(popts, true)
     // 'nothing to commit' can occur when core.autocrlf is set to true

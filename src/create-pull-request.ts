@@ -4,9 +4,9 @@ import {
   getWorkingBaseAndType,
   WorkingBaseType
 } from './create-or-update-branch'
-import {GitHubHelper} from './github-helper'
-import {GitCommandManager} from './git-command-manager'
-import {GitConfigHelper} from './git-config-helper'
+import { GitCommandManager } from './git-command-manager'
+import { GitConfigHelper } from './git-config-helper'
+import { GitHubHelper } from './github-helper'
 import * as utils from './utils'
 
 export interface Inputs {
@@ -194,6 +194,7 @@ export async function createPullRequest(inputs: Inputs): Promise<void> {
       inputs.branch,
       branchRemoteName,
       inputs.signoff,
+      inputs.signCommits,
       inputs.addPaths
     )
     outputs.set('pull-request-head-sha', result.headSha)
